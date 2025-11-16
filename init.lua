@@ -2,6 +2,7 @@ require "paq" {
   "savq/paq-nvim",
   "shaunsingh/nord.nvim",
   "kylechui/nvim-surround",
+  "tpope/vim-fugitive",
   "neovim/nvim-lspconfig",
 }
 
