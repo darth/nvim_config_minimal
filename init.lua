@@ -1,10 +1,3 @@
-local o = vim.opt
-local bo = vim.bo
-local fn = vim.fn
-local api = vim.api
-local keymap = vim.keymap
-local cmd = vim.cmd
-
 require "paq" {
   "savq/paq-nvim",
   "neovim/nvim-lspconfig",
@@ -12,79 +5,79 @@ require "paq" {
   "tpope/vim-surround"
 }
 
-o.shortmess:append({ I = true })
-o.undofile = true
+vim.opt.shortmess:append({ I = true })
+vim.opt.undofile = true
 
-o.tabstop = 2
-o.softtabstop = 2
-o.shiftwidth = 2
-o.expandtab = true
-o.cinoptions = "g0:0"
+vim.opt.tabstop = 2
+vim.opt.softtabstop = 2
+vim.opt.shiftwidth = 2
+vim.opt.expandtab = true
+vim.opt.cinoptions = "g0:0"
 
-o.cursorline = true
-o.colorcolumn = "81"
+vim.opt.cursorline = true
+vim.opt.colorcolumn = "81"
 
-o.list = true
-o.listchars = "tab:▸ ,eol:¬"
+vim.opt.list = true
+vim.opt.listchars = "tab:▸ ,eol:¬"
 
 -- linenumbers
-o.number = true
-o.relativenumber = true
-local augroup_numbertoggle = api.nvim_create_augroup("numbertoggle", { clear = true })
-api.nvim_create_autocmd({ "BufEnter", "FocusGained", "InsertLeave", "CmdlineLeave", "WinEnter" }, {
+vim.opt.number = true
+vim.opt.relativenumber = true
+local augroup_numbertoggle = vim.api.nvim_create_augroup("numbertoggle", { clear = true })
+vim.api.nvim_create_autocmd({ "BufEnter", "FocusGained", "InsertLeave", "CmdlineLeave", "WinEnter" }, {
   pattern = "*",
   group = augroup_numbertoggle,
   callback = function()
-    if bo.buflisted then
-      o.relativenumber = true
+    if vim.bo.buflisted then
+      vim.opt.relativenumber = true
     end
   end
 })
-api.nvim_create_autocmd({ "BufLeave", "FocusLost", "InsertEnter", "CmdlineEnter", "WinLeave" }, {
+vim.api.nvim_create_autocmd({ "BufLeave", "FocusLost", "InsertEnter", "CmdlineEnter", "WinLeave" }, {
   pattern = "*",
   group = augroup_numbertoggle,
   callback = function()
-    if bo.buflisted then
-      o.relativenumber = false
-      cmd("redraw")
+    if vim.bo.buflisted then
+      vim.opt.relativenumber = false
+      vim.cmd("redraw")
     end
   end
 })
 
 -- search
-o.smartcase = true
-o.ignorecase = true
-o.inccommand = 'nosplit'
-o.showmatch = true
-o.gdefault = true
-keymap.set("n", "<leader><space>", "<cmd>noh<CR>", {})
-keymap.set({ "n", "x" }, "&", "<cmd>&&<CR>", {})
+vim.opt.smartcase = true
+vim.opt.ignorecase = true
+vim.opt.inccommand = 'nosplit'
+vim.opt.showmatch = true
+vim.opt.gdefault = true
+vim.keymap.set("n", "<leader><space>", "<cmd>noh<CR>", {})
+vim.keymap.set({ "n", "x" }, "&", "<cmd>&&<CR>", {})
 
 -- wildmenu
-o.wildmenu = true
-o.wildmode = "list:longest"
-keymap.set("c", "<c-p>", function()
-  if fn.wildmenumode() == 1 then return "<c-p>" end
+vim.opt.wildmenu = true
+vim.opt.wildmode = "list:longest"
+vim.keymap.set("c", "<c-p>", function()
+  if vim.fn.wildmenumode() == 1 then return "<c-p>" end
   return "<up>"
 end, { expr = true })
-keymap.set("c", "<c-n>", function()
-  if fn.wildmenumode() == 1 then return "<c-n>" end
+vim.keymap.set("c", "<c-n>", function()
+  if vim.fn.wildmenumode() == 1 then return "<c-n>" end
   return "<down>"
 end, { expr = true })
 
-o.backspace = "indent,eol,start"
+vim.opt.backspace = "indent,eol,start"
 
-cmd("colorscheme nord")
+vim.cmd.colorscheme("nord")
 
 -- restore cursor position
-local augroup_restore = api.nvim_create_augroup("restore", { clear = true })
-api.nvim_create_autocmd({ "BufReadPost" }, {
+local augroup_restore = vim.api.nvim_create_augroup("restore", { clear = true })
+vim.api.nvim_create_autocmd({ "BufReadPost" }, {
   pattern = "*",
   group = augroup_restore,
   callback = function()
-    local line = fn.line("'\"")
-    if line >= 1 and line <= fn.line("$") then
-      cmd.normal("g`\"")
+    local line = vim.fn.line("'\"")
+    if line >= 1 and line <= vim.fn.line("$") then
+      vim.cmd.normal("g`\"")
     end
   end
 })
