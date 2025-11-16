@@ -70,6 +70,14 @@ vim.opt.backspace = "indent,eol,start"
 
 vim.cmd.colorscheme("nord")
 
+-- highlight text on yank
+vim.api.nvim_create_autocmd({ "TextYankPost" }, {
+  pattern = "*",
+  callback = function()
+    vim.highlight.on_yank({ timeout = 500 })
+  end
+})
+
 -- restore cursor position
 local augroup_restore = vim.api.nvim_create_augroup("restore", { clear = true })
 vim.api.nvim_create_autocmd({ "BufReadPost" }, {
