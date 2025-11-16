@@ -79,6 +79,7 @@ vim.api.nvim_create_autocmd({ "TextYankPost" }, {
 })
 
 vim.keymap.set("n", "<leader>c", "<cmd>:close<CR>")
+vim.keymap.set("n", "<space>", "za")
 
 -- restore cursor position
 local augroup_restore = vim.api.nvim_create_augroup("restore", { clear = true })
