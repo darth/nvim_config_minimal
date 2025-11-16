@@ -4,6 +4,7 @@ require "paq" {
   "kylechui/nvim-surround",
   "tpope/vim-fugitive",
   "neovim/nvim-lspconfig",
+  "nvim-treesitter/nvim-treesitter",
 }
 
 vim.opt.shortmess:append({ I = true })
@@ -93,6 +94,13 @@ vim.api.nvim_create_autocmd({ "BufReadPost" }, {
       vim.cmd.normal("g`\"")
     end
   end
+})
+
+require "nvim-treesitter.configs".setup({
+  ensure_installed = { "c", "cpp", "rust", "bash", "powershell", "lua", "vim", "vimdoc" },
+  highlight = {
+    enable = false,
+  }
 })
 
 require "nvim-surround".setup({})
