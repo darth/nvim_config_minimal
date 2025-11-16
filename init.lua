@@ -5,6 +5,8 @@ require "paq" {
   "tpope/vim-fugitive",
   "kana/vim-textobj-user",
   "kana/vim-textobj-entire",
+  "nvim-tree/nvim-web-devicons",
+  "nvim-lualine/lualine.nvim",
   "neovim/nvim-lspconfig",
   "nvim-treesitter/nvim-treesitter",
 }
@@ -105,7 +107,7 @@ require "nvim-treesitter.configs".setup({
   }
 })
 
-require "nvim-surround".setup({})
+require "nvim-surround".setup()
 
 -- fugitive
 vim.keymap.set("n", "<leader>gs", "<cmd>Git<CR>", { silent = true })
@@ -120,4 +122,12 @@ vim.api.nvim_create_autocmd({ "BufReadPost" }, {
   command = [[
     call textobj#user#map("entire", {"-": {"select-a": "aE", "select-i": "iE"}})
   ]]
+})
+
+-- lualine
+require("lualine").setup({
+  options = {
+    section_separators = { left = "", right = "" },
+    component_separators = { left = "", right = "" },
+  }
 })
