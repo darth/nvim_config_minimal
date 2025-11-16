@@ -3,6 +3,8 @@ require "paq" {
   "shaunsingh/nord.nvim",
   "kylechui/nvim-surround",
   "tpope/vim-fugitive",
+  "kana/vim-textobj-user",
+  "kana/vim-textobj-entire",
   "neovim/nvim-lspconfig",
   "nvim-treesitter/nvim-treesitter",
 }
@@ -108,3 +110,14 @@ require "nvim-surround".setup({})
 -- fugitive
 vim.keymap.set("n", "<leader>gs", "<cmd>Git<CR>", { silent = true })
 vim.keymap.set("n", "<leader>gd", "<cmd>Gdiff<CR>", { silent = true })
+
+-- textobjs
+vim.g.textobj_entire_no_default_key_mappings = 1
+local augroup_textobj_entire = vim.api.nvim_create_augroup("textobj-entire", { clear = true })
+vim.api.nvim_create_autocmd({ "BufReadPost" }, {
+  pattern = "*",
+  group = augroup_textobj_entire,
+  command = [[
+    call textobj#user#map("entire", {"-": {"select-a": "aE", "select-i": "iE"}})
+  ]]
+})
