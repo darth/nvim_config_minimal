@@ -80,7 +80,7 @@ vim.api.nvim_create_autocmd({ "TextYankPost" }, {
   end
 })
 
-vim.keymap.set("n", "<leader>c", "<cmd>:close<CR>")
+vim.keymap.set("n", "<leader>c", "<cmd>close<CR>")
 vim.keymap.set("n", "<space>", "za")
 
 -- restore cursor position
@@ -104,3 +104,7 @@ require "nvim-treesitter.configs".setup({
 })
 
 require "nvim-surround".setup({})
+
+-- fugitive
+vim.keymap.set("n", "<leader>gs", "<cmd>Git<CR>", { silent = true })
+vim.keymap.set("n", "<leader>gd", "<cmd>Gdiff<CR>", { silent = true })
