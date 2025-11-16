@@ -1,13 +1,14 @@
 require "paq" {
   "savq/paq-nvim",
-  "neovim/nvim-lspconfig",
   "shaunsingh/nord.nvim",
-  "tpope/vim-surround"
+  "kylechui/nvim-surround",
+  "neovim/nvim-lspconfig",
 }
 
 vim.opt.shortmess:append({ I = true })
 vim.opt.undofile = true
 
+-- indentation
 vim.opt.tabstop = 2
 vim.opt.softtabstop = 2
 vim.opt.shiftwidth = 2
@@ -81,3 +82,5 @@ vim.api.nvim_create_autocmd({ "BufReadPost" }, {
     end
   end
 })
+
+require "nvim-surround".setup({})
