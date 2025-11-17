@@ -7,6 +7,7 @@ require("paq")({
   "kana/vim-textobj-entire",
   "nvim-tree/nvim-web-devicons",
   "nvim-lualine/lualine.nvim",
+  "ibhagwan/fzf-lua",
   "neovim/nvim-lspconfig",
   "nvim-treesitter/nvim-treesitter",
 })
@@ -140,3 +141,15 @@ require("lualine").setup({
     }
   },
 })
+
+-- fzf
+require("fzf-lua").setup({
+  keymap = {
+    fzf = {
+      true,
+      -- Use <c-q> to select all items and add them to the quickfix list
+      ["ctrl-q"] = "select-all+accept",
+    },
+  },
+})
+vim.keymap.set("n", "<leader>f", "<cmd>FzfLua files<CR>")
