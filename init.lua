@@ -1,4 +1,4 @@
-require "paq" {
+require("paq")({
   "savq/paq-nvim",
   "shaunsingh/nord.nvim",
   "kylechui/nvim-surround",
@@ -9,7 +9,7 @@ require "paq" {
   "nvim-lualine/lualine.nvim",
   "neovim/nvim-lspconfig",
   "nvim-treesitter/nvim-treesitter",
-}
+})
 
 vim.opt.shortmess:append({ I = true })
 vim.opt.undofile = true
@@ -100,14 +100,14 @@ vim.api.nvim_create_autocmd({ "BufReadPost" }, {
   end
 })
 
-require "nvim-treesitter.configs".setup({
+require("nvim-treesitter.configs").setup({
   ensure_installed = { "c", "cpp", "rust", "bash", "powershell", "lua", "vim", "vimdoc" },
   highlight = {
     enable = false,
   }
 })
 
-require "nvim-surround".setup()
+require("nvim-surround").setup()
 
 -- fugitive
 vim.keymap.set("n", "<leader>gs", "<cmd>Git<CR>", { silent = true })
