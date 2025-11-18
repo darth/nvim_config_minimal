@@ -1,3 +1,4 @@
+-- paq {{{
 require "paq" {
   "savq/paq-nvim",
   "shaunsingh/nord.nvim",
@@ -11,24 +12,27 @@ require "paq" {
   "nvim-treesitter/nvim-treesitter",
   "neovim/nvim-lspconfig"
 }
-
+-- }}}
+-- colorscheme {{{
+vim.cmd.colorscheme "nord"
+-- }}}
+-- misc {{{
 vim.opt.shortmess:append { I = true }
 vim.opt.undofile = true
-
--- indentation
+vim.opt.cursorline = true
+vim.opt.colorcolumn = "81"
+vim.opt.backspace = "indent,eol,start"
+vim.opt.list = true
+vim.opt.listchars = { tab = "▸ ", eol = "¬" }
+-- }}}
+-- indentation {{{
 vim.opt.tabstop = 2
 vim.opt.softtabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.expandtab = true
 vim.opt.cinoptions = "g0:0"
-
-vim.opt.cursorline = true
-vim.opt.colorcolumn = "81"
-
-vim.opt.list = true
-vim.opt.listchars = { tab = "▸ ", eol = "¬" }
-
--- linenumbers
+-- }}}
+-- linenumbers {{{
 vim.opt.number = true
 vim.opt.relativenumber = true
 local augroup_numbertoggle = vim.api.nvim_create_augroup("numbertoggle", { clear = true })
@@ -51,8 +55,8 @@ vim.api.nvim_create_autocmd({ "BufLeave", "FocusLost", "InsertEnter", "CmdlineEn
     end
   end
 })
-
--- search
+-- }}}
+-- search {{{
 vim.opt.smartcase = true
 vim.opt.ignorecase = true
 vim.opt.inccommand = "nosplit"
@@ -60,8 +64,8 @@ vim.opt.showmatch = true
 vim.opt.gdefault = true
 vim.keymap.set("n", "<leader><space>", "<cmd>noh<CR>", {})
 vim.keymap.set({ "n", "x" }, "&", "<cmd>&&<CR>", {})
-
--- wildmenu
+-- }}}
+-- wildmenu {{{
 vim.opt.wildmenu = true
 vim.opt.wildmode = "list:longest"
 vim.keymap.set("c", "<c-p>", function()
@@ -72,23 +76,20 @@ vim.keymap.set("c", "<c-n>", function()
   if vim.fn.wildmenumode() == 1 then return "<c-n>" end
   return "<down>"
 end, { expr = true })
-
-vim.opt.backspace = "indent,eol,start"
-
-vim.cmd.colorscheme "nord"
-
--- highlight text on yank
+-- }}}
+-- highlight text on yank {{{
 vim.api.nvim_create_autocmd({ "TextYankPost" }, {
   pattern = "*",
   callback = function()
     vim.highlight.on_yank { timeout = 500 }
   end
 })
-
+-- }}}
+-- misc keymaps {{{
 vim.keymap.set("n", "<leader>c", "<cmd>close<CR>")
 vim.keymap.set("n", "<space>", "za")
-
--- restore cursor position
+-- }}}
+-- restore cursor position {{{
 local augroup_restore = vim.api.nvim_create_augroup("restore", { clear = true })
 vim.api.nvim_create_autocmd({ "BufReadPost" }, {
   pattern = "*",
@@ -100,21 +101,15 @@ vim.api.nvim_create_autocmd({ "BufReadPost" }, {
     end
   end
 })
-
-require "nvim-treesitter.configs".setup {
-  ensure_installed = { "c", "cpp", "rust", "bash", "powershell", "lua", "vim", "vimdoc" },
-  highlight = {
-    enable = false
-  }
-}
-
-require "nvim-surround".setup()
-
--- fugitive
+-- }}}
+-- surround {{{
+require "nvim-surround".setup {}
+-- }}}
+-- fugitive {{{
 vim.keymap.set("n", "<leader>gs", "<cmd>Git<CR>", { silent = true })
 vim.keymap.set("n", "<leader>gd", "<cmd>Gdiff<CR>", { silent = true })
-
--- textobjs
+-- }}}
+-- textobjs {{{
 vim.g.textobj_entire_no_default_key_mappings = 1
 local augroup_textobj_entire = vim.api.nvim_create_augroup("textobj-entire", { clear = true })
 vim.api.nvim_create_autocmd({ "BufReadPost" }, {
@@ -124,8 +119,8 @@ vim.api.nvim_create_autocmd({ "BufReadPost" }, {
     vim.fn["textobj#user#map"]("entire", { ["-"] = { ["select-a"] = "aE", ["select-i"] = "iE" } })
   end
 })
-
--- lualine
+-- }}}
+-- lualine {{{
 require "lualine".setup {
   options = {
     section_separators = { left = "", right = "" },
@@ -141,8 +136,8 @@ require "lualine".setup {
     }
   }
 }
-
--- fzf
+-- }}}
+-- fzf {{{
 require "fzf-lua".setup {
   keymap = {
     fzf = {
@@ -153,8 +148,16 @@ require "fzf-lua".setup {
   }
 }
 vim.keymap.set("n", "<leader>f", "<cmd>FzfLua files<CR>")
-
--- lspconfig
+-- }}}
+-- treesitter {{{
+require "nvim-treesitter.configs".setup {
+  ensure_installed = { "c", "cpp", "rust", "bash", "powershell", "lua", "vim", "vimdoc" },
+  highlight = {
+    enable = true
+  }
+}
+-- }}}
+-- lspconfig {{{
 vim.lsp.enable "lua_ls"
 vim.lsp.config("lua_ls", {
   on_init = function(client)
@@ -205,3 +208,4 @@ vim.lsp.config("lua_ls", {
     }
   }
 })
+-- }}}
