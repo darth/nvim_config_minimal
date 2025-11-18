@@ -26,7 +26,7 @@ vim.opt.cursorline = true
 vim.opt.colorcolumn = "81"
 
 vim.opt.list = true
-vim.opt.listchars = "tab:▸ ,eol:¬"
+vim.opt.listchars = { tab ="▸ ", eol = "¬" }
 
 -- linenumbers
 vim.opt.number = true
