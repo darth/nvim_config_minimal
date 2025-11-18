@@ -102,6 +102,30 @@ vim.api.nvim_create_autocmd({ "BufReadPost" }, {
   end
 })
 -- }}}
+-- quickfix {{{
+local augroup_quickfix = vim.api.nvim_create_augroup("qf", { clear = true })
+vim.api.nvim_create_autocmd({ "FileType" }, {
+  pattern = "qf",
+  group = augroup_quickfix,
+  callback = function()
+    vim.opt.buflisted = false
+    vim.opt.number = false
+    vim.opt.relativenumber = false
+    vim.opt.colorcolumn = ""
+    vim.opt.list = false
+    vim.opt.wrap = false
+  end
+})
+vim.api.nvim_create_autocmd({ "WinEnter" }, {
+  pattern = "*",
+  group = augroup_quickfix,
+  callback = function()
+    if (#vim.api.nvim_list_wins() == 1) and (not vim.bo.buflisted) then
+      vim.cmd "silent! quit"
+    end
+  end
+})
+-- }}}
 -- surround {{{
 require "nvim-surround".setup {}
 -- }}}
