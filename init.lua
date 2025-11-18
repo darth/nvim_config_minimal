@@ -120,9 +120,9 @@ local augroup_textobj_entire = vim.api.nvim_create_augroup("textobj-entire", { c
 vim.api.nvim_create_autocmd({ "BufReadPost" }, {
   pattern = "*",
   group = augroup_textobj_entire,
-  command = [[
-    call textobj#user#map("entire", {"-": {"select-a": "aE", "select-i": "iE"}})
-  ]]
+  callback = function()
+    vim.fn["textobj#user#map"]("entire", {["-"] = {["select-a"] = "aE", ["select-i"] = "iE"}})
+  end
 })
 
 -- lualine
