@@ -1,4 +1,4 @@
-require("paq")({
+require "paq" {
   "savq/paq-nvim",
   "shaunsingh/nord.nvim",
   "kylechui/nvim-surround",
@@ -9,10 +9,10 @@ require("paq")({
   "nvim-lualine/lualine.nvim",
   "ibhagwan/fzf-lua",
   "nvim-treesitter/nvim-treesitter",
-  "neovim/nvim-lspconfig",
-})
+  "neovim/nvim-lspconfig"
+}
 
-vim.opt.shortmess:append({ I = true })
+vim.opt.shortmess:append { I = true }
 vim.opt.undofile = true
 
 -- indentation
@@ -26,7 +26,7 @@ vim.opt.cursorline = true
 vim.opt.colorcolumn = "81"
 
 vim.opt.list = true
-vim.opt.listchars = { tab ="▸ ", eol = "¬" }
+vim.opt.listchars = { tab = "▸ ", eol = "¬" }
 
 -- linenumbers
 vim.opt.number = true
@@ -47,7 +47,7 @@ vim.api.nvim_create_autocmd({ "BufLeave", "FocusLost", "InsertEnter", "CmdlineEn
   callback = function()
     if vim.bo.buflisted then
       vim.opt.relativenumber = false
-      vim.cmd("redraw")
+      vim.cmd "redraw"
     end
   end
 })
@@ -55,7 +55,7 @@ vim.api.nvim_create_autocmd({ "BufLeave", "FocusLost", "InsertEnter", "CmdlineEn
 -- search
 vim.opt.smartcase = true
 vim.opt.ignorecase = true
-vim.opt.inccommand = 'nosplit'
+vim.opt.inccommand = "nosplit"
 vim.opt.showmatch = true
 vim.opt.gdefault = true
 vim.keymap.set("n", "<leader><space>", "<cmd>noh<CR>", {})
@@ -75,13 +75,13 @@ end, { expr = true })
 
 vim.opt.backspace = "indent,eol,start"
 
-vim.cmd.colorscheme("nord")
+vim.cmd.colorscheme "nord"
 
 -- highlight text on yank
 vim.api.nvim_create_autocmd({ "TextYankPost" }, {
   pattern = "*",
   callback = function()
-    vim.highlight.on_yank({ timeout = 500 })
+    vim.highlight.on_yank { timeout = 500 }
   end
 })
 
@@ -94,21 +94,21 @@ vim.api.nvim_create_autocmd({ "BufReadPost" }, {
   pattern = "*",
   group = augroup_restore,
   callback = function()
-    local line = vim.fn.line("'\"")
-    if line >= 1 and line <= vim.fn.line("$") then
-      vim.cmd.normal("g`\"")
+    local line = vim.fn.line "'\""
+    if line >= 1 and line <= vim.fn.line "$" then
+      vim.cmd.normal "g`\""
     end
   end
 })
 
-require("nvim-treesitter.configs").setup({
+require "nvim-treesitter.configs".setup {
   ensure_installed = { "c", "cpp", "rust", "bash", "powershell", "lua", "vim", "vimdoc" },
   highlight = {
-    enable = false,
+    enable = false
   }
-})
+}
 
-require("nvim-surround").setup()
+require "nvim-surround".setup()
 
 -- fugitive
 vim.keymap.set("n", "<leader>gs", "<cmd>Git<CR>", { silent = true })
@@ -121,48 +121,48 @@ vim.api.nvim_create_autocmd({ "BufReadPost" }, {
   pattern = "*",
   group = augroup_textobj_entire,
   callback = function()
-    vim.fn["textobj#user#map"]("entire", {["-"] = {["select-a"] = "aE", ["select-i"] = "iE"}})
+    vim.fn["textobj#user#map"]("entire", { ["-"] = { ["select-a"] = "aE", ["select-i"] = "iE" } })
   end
 })
 
 -- lualine
-require("lualine").setup({
+require "lualine".setup {
   options = {
     section_separators = { left = "", right = "" },
-    component_separators = { left = "", right = "" },
+    component_separators = { left = "", right = "" }
   },
   sections = {
     lualine_x = {
       "encoding", "fileformat", "filetype",
-      { "diagnostics", sources = { "nvim_lsp" }}
+      { "diagnostics", sources = { "nvim_lsp" } }
     },
     lualine_z = {
       { "location", icon = "" }
     }
-  },
-})
+  }
+}
 
 -- fzf
-require("fzf-lua").setup({
+require "fzf-lua".setup {
   keymap = {
     fzf = {
       true,
       -- Use <c-q> to select all items and add them to the quickfix list
-      ["ctrl-q"] = "select-all+accept",
-    },
-  },
-})
+      ["ctrl-q"] = "select-all+accept"
+    }
+  }
+}
 vim.keymap.set("n", "<leader>f", "<cmd>FzfLua files<CR>")
 
 -- lspconfig
-vim.lsp.enable("lua_ls")
+vim.lsp.enable "lua_ls"
 vim.lsp.config("lua_ls", {
   on_init = function(client)
     if client.workspace_folders then
       local path = client.workspace_folders[1].name
       if
-        path ~= vim.fn.stdpath("config")
-        and (vim.uv.fs_stat(path .. "/.luarc.json") or vim.uv.fs_stat(path .. "/.luarc.jsonc"))
+          path ~= vim.fn.stdpath "config"
+          and (vim.uv.fs_stat(path .. "/.luarc.json") or vim.uv.fs_stat(path .. "/.luarc.jsonc"))
       then
         return
       end
@@ -177,15 +177,15 @@ vim.lsp.config("lua_ls", {
         -- (see `:h lua-module-load`)
         path = {
           "lua/?.lua",
-          "lua/?/init.lua",
-        },
+          "lua/?/init.lua"
+        }
       },
       -- Make the server aware of Neovim runtime files
       workspace = {
         checkThirdParty = false,
         library = {
           vim.env.VIMRUNTIME,
-          "${3rd}/luv/library",
+          "${3rd}/luv/library"
         }
       }
     })
@@ -198,10 +198,10 @@ vim.lsp.config("lua_ls", {
           indent_style = "space",
           indent_size = "2",
           quote_style = "double",
-          trailing_table_separator = "keep",
-          call_arg_parentheses = "remove",
+          trailing_table_separator = "never",
+          call_arg_parentheses = "remove"
         }
-      },
+      }
     }
   }
 })
