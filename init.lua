@@ -151,6 +151,9 @@ require "lualine".setup {
     component_separators = { left = "", right = "" }
   },
   sections = {
+    lualine_b = {
+      "branch", "diff"
+    },
     lualine_x = {
       "encoding", "fileformat", "filetype",
       { "diagnostics", sources = { "nvim_lsp" } }
