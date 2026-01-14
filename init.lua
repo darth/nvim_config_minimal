@@ -267,6 +267,13 @@ vim.lsp.config("lua_ls", {
 -- rust {{{
 vim.lsp.enable "rust_analyzer"
 vim.lsp.config("rust_analyzer", {
+  settings = {
+    ["rust-analyzer"] = {
+      rustfmt = {
+        rangeFormatting = { enable = true }
+      }
+    }
+  }
 })
 -- }}}
 -- }}}
