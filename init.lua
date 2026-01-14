@@ -10,6 +10,7 @@ require "paq" {
   "nvim-lualine/lualine.nvim",
   "ibhagwan/fzf-lua",
   "nvim-treesitter/nvim-treesitter",
+  "nvim-treesitter/nvim-treesitter-textobjects",
   "neovim/nvim-lspconfig"
 }
 -- }}}
@@ -182,6 +183,26 @@ require "nvim-treesitter.configs".setup {
   ensure_installed = { "c", "cpp", "rust", "bash", "powershell", "lua", "vim", "vimdoc" },
   highlight = {
     enable = true
+  },
+  textobjects = {
+    lsp_interop = {
+      enable = true,
+      border = "none",
+      floating_preview_opts = {},
+      peek_definition_code = {
+        ["<leader>df"] = "@function.outer",
+        ["<leader>dF"] = "@class.outer"
+      }
+    },
+    select = {
+      enable = true,
+      keymaps = {
+        ["af"] = "@function.outer",
+        ["if"] = "@function.inner",
+        ["ac"] = "@class.outer",
+        ["ic"] = "@class.inner"
+      }
+    }
   }
 }
 -- }}}
