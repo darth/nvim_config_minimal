@@ -255,6 +255,10 @@ vim.lsp.config("lua_ls", {
           trailing_table_separator = "never",
           call_arg_parentheses = "remove"
         }
+      },
+      completion = {
+        callSnippet = "Replace",
+        keywordSnippet = "Replace"
       }
     }
   }
