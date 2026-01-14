@@ -22,6 +22,7 @@ vim.opt.undofile = true
 vim.opt.cursorline = true
 vim.opt.colorcolumn = "81"
 vim.opt.backspace = "indent,eol,start"
+vim.opt.completeopt = { "noinsert", "noselect", "popup", "menuone", "fuzzy" }
 vim.opt.list = true
 vim.opt.listchars = { tab = "▸ ", eol = "¬" }
 -- }}}
@@ -191,12 +192,22 @@ vim.diagnostic.config {
       [vim.diagnostic.severity.ERROR] = "󰅚",
       [vim.diagnostic.severity.WARN] = "󰀪",
       [vim.diagnostic.severity.INFO] = "󰋽",
-      [vim.diagnostic.severity.HINT] = "󰌶",
+      [vim.diagnostic.severity.HINT] = "󰌶"
     }
   }
 }
 -- }}}
 -- lspconfig {{{
+vim.api.nvim_create_autocmd("LspAttach", {
+  desc = "Enable vim.lsp.completion",
+  callback = function(event)
+    local client_id = vim.tbl_get(event, "data", "client_id")
+    if client_id == nil then
+      return
+    end
+    vim.lsp.completion.enable(true, client_id, event.buf, { autotrigger = false })
+  end
+})
 -- lua {{{
 vim.lsp.enable "lua_ls"
 vim.lsp.config("lua_ls", {
