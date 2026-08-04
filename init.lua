@@ -1,17 +1,16 @@
--- paq {{{
-require "paq" {
-  "savq/paq-nvim",
-  "shaunsingh/nord.nvim",
-  "kylechui/nvim-surround",
-  "tpope/vim-fugitive",
-  "kana/vim-textobj-user",
-  "kana/vim-textobj-entire",
-  "nvim-tree/nvim-web-devicons",
-  "nvim-lualine/lualine.nvim",
-  "ibhagwan/fzf-lua",
-  "nvim-treesitter/nvim-treesitter",
-  "nvim-treesitter/nvim-treesitter-textobjects",
-  "neovim/nvim-lspconfig"
+-- pack {{{
+vim.pack.add {
+  "https://github.com/shaunsingh/nord.nvim",
+  "https://github.com/kylechui/nvim-surround",
+  "https://github.com/tpope/vim-fugitive",
+  "https://github.com/kana/vim-textobj-user",
+  "https://github.com/kana/vim-textobj-entire",
+  "https://github.com/nvim-tree/nvim-web-devicons",
+  "https://github.com/nvim-lualine/lualine.nvim",
+  "https://github.com/ibhagwan/fzf-lua",
+  { src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main" },
+  { src = "https://github.com/nvim-treesitter/nvim-treesitter-textobjects", version = "main" },
+  "https://github.com/neovim/nvim-lspconfig"
 }
 -- }}}
 -- colorscheme {{{
