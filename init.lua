@@ -280,4 +280,7 @@ vim.lsp.config("rust_analyzer", {
   }
 })
 -- }}}
+-- c/c++ {{{
+vim.lsp.enable "clangd"
+-- }}}
 -- }}}
