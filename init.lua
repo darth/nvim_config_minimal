@@ -3,12 +3,11 @@ vim.pack.add {
   "https://github.com/shaunsingh/nord.nvim",
   "https://github.com/kylechui/nvim-surround",
   "https://github.com/tpope/vim-fugitive",
-  "https://github.com/kana/vim-textobj-user",
-  "https://github.com/kana/vim-textobj-entire",
   "https://github.com/nvim-tree/nvim-web-devicons",
   "https://github.com/nvim-lualine/lualine.nvim",
   "https://github.com/ibhagwan/fzf-lua",
-  { src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main" },
+  "https://github.com/chrisgrieser/nvim-various-textobjs",
+  { src = "https://github.com/nvim-treesitter/nvim-treesitter",             version = "main" },
   { src = "https://github.com/nvim-treesitter/nvim-treesitter-textobjects", version = "main" },
   "https://github.com/neovim/nvim-lspconfig"
 }
@@ -135,15 +134,11 @@ vim.keymap.set("n", "<leader>gs", "<cmd>Git<CR>", { silent = true })
 vim.keymap.set("n", "<leader>gd", "<cmd>Gdiff<CR>", { silent = true })
 -- }}}
 -- textobjs {{{
-vim.g.textobj_entire_no_default_key_mappings = 1
-local augroup_textobj_entire = vim.api.nvim_create_augroup("textobj-entire", { clear = true })
-vim.api.nvim_create_autocmd({ "BufReadPost" }, {
-  pattern = "*",
-  group = augroup_textobj_entire,
-  callback = function()
-    vim.fn["textobj#user#map"]("entire", { ["-"] = { ["select-a"] = "aE", ["select-i"] = "iE" } })
-  end
-})
+require "various-textobjs".setup {
+  keymaps = {
+    useDefaults = true
+  }
+}
 -- }}}
 -- lualine {{{
 require "lualine".setup {
