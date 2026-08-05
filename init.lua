@@ -173,32 +173,21 @@ require "fzf-lua".setup {
 vim.keymap.set("n", "<leader>f", "<cmd>FzfLua files<CR>")
 -- }}}
 -- treesitter {{{
-require "nvim-treesitter.configs".setup {
-  ensure_installed = { "c", "cpp", "rust", "bash", "powershell", "lua", "vim", "vimdoc" },
-  highlight = {
-    enable = true
-  },
-  textobjects = {
-    lsp_interop = {
-      enable = true,
-      border = "none",
-      floating_preview_opts = {},
-      peek_definition_code = {
-        ["<leader>df"] = "@function.outer",
-        ["<leader>dF"] = "@class.outer"
-      }
-    },
-    select = {
-      enable = true,
-      keymaps = {
-        ["af"] = "@function.outer",
-        ["if"] = "@function.inner",
-        ["ac"] = "@class.outer",
-        ["ic"] = "@class.inner"
-      }
-    }
-  }
-}
+require "nvim-treesitter".install { "c", "cpp", "rust", "bash", "powershell", "lua", "vim", "vimdoc" }
+-- }}}
+-- treesitter-textobjs {{{
+vim.keymap.set({ "x", "o" }, "af", function()
+  require "nvim-treesitter-textobjects.select".select_textobject("@function.outer", "textobjects")
+end)
+vim.keymap.set({ "x", "o" }, "if", function()
+  require "nvim-treesitter-textobjects.select".select_textobject("@function.inner", "textobjects")
+end)
+vim.keymap.set({ "x", "o" }, "ac", function()
+  require "nvim-treesitter-textobjects.select".select_textobject("@class.outer", "textobjects")
+end)
+vim.keymap.set({ "x", "o" }, "ic", function()
+  require "nvim-treesitter-textobjects.select".select_textobject("@class.inner", "textobjects")
+end)
 -- }}}
 -- diagnostics {{{
 vim.diagnostic.config {
